@@ -1,0 +1,12 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/sound-country-449420-f2/school', '.']
+
+  # Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/sound-country-449420-f2/school']
+
+  # Deploy to Google Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: ['gcloud', 'run', 'deploy', 'school', '--image', 'gcr.io/sound-country-449420-f2/school', '--platform', 'managed', '--region', 'us-central1', '--allow-unauthenticated']
